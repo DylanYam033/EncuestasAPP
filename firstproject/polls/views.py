@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
 #importo el modelo de question 
@@ -12,8 +12,11 @@ def index(request): #vista basada en funcion, las views pueden estar basadas en 
     })
 
 def detail(request, question_id):
-    """details of every question"""
-    return HttpResponse(f'Estás viendo la pregunta {question_id}')
+    question = get_object_or_404 (Question, pk = question_id) #arroja el error 404
+    return render(request, "polls/detail.html", { #render lleva tres parametros: request, ruta del template y un contexto(diccionario)
+        "question": question #dejamos disponible la variable para ser usada en index.html
+    })
+    
 
 def results(request, question_id):
     """details of every question result"""
