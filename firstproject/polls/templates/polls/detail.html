@@ -1,0 +1,9 @@
+<h1>{{question.question_text}}</h1> {% comment %} Titulo con el texto de la pregunta que viene de views {% endcomment %}
+<ul>
+    {% for choice in question.choice_set.all %}
+    <li>
+        {{choice.choice_text}}
+    </li>
+    {% endfor %}
+</ul>
+
