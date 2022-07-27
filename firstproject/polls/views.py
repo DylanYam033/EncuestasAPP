@@ -7,7 +7,9 @@ from .models import Question
 #Las views son el backend de nuestra app, las cuales van a estar ligadas a un template(front)
 def index(request): #vista basada en funcion, las views pueden estar basadas en funciones o clases. 
     latest_question_list = Question.objects.all #objeto queryset (conjuntos) con las preguntas
-    return HttpRespons
+    return render(request, "polls/index.html", { #render lleva tres parametros: request, ruta del template y un contexto(diccionario)
+        "latest_question_list": latest_question_list #dejamos disponible la variable para ser usada en index.html
+    })
 
 def detail(request, question_id):
     """details of every question"""
