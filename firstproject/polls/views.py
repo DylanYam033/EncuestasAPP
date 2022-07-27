@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+#importo el modelo de question 
+from .models import Question
+
 #Las views son el backend de nuestra app, las cuales van a estar ligadas a un template(front)
 def index(request): #vista basada en funcion, las views pueden estar basadas en funciones o clases. 
-    return HttpResponse("Hello world")
+    latest_question_list = Question.objects.all #objeto queryset (conjuntos) con las preguntas
+    return HttpRespons
 
 def detail(request, question_id):
     """details of every question"""
