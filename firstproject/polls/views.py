@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+#Las views son el backend de nuestra app, las cuales van a estar ligadas a un template(front)
 def index(request): #vista basada en funcion, las views pueden estar basadas en funciones o clases. 
     return HttpResponse("Hello world")
 
