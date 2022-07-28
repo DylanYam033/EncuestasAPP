@@ -1,9 +1,25 @@
-<h1>{{question.question_text}}</h1> {% comment %} Titulo con el texto de la pregunta que viene de views {% endcomment %}
-<ul>
-    {% for choice in question.choice_set.all %}
-    <li>
-        {{choice.choice_text}}
-    </li>
-    {% endfor %}
-</ul>
-
+ <form action="{% url 'polls:vote' question.id %}" method="post">  {% comment %} en action se pone la url a donde apunta el formulario, siempre usar metodo post{% endcomment %}
+                                                                   {% comment %} con el app name y el name que esta en urls{% endcomment %}
+{% csrf_token %} {% comment %} siempre usar esta etiqueta por seguridad para proteger los formularios{% endcomment %}
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend> {% comment %} trae del modelo question la pregunta{% endcomment %}
+        {% if error_message %}
+            <p><strong>{{ error_message }}</strong></p> {% comment %} la variable error_message viene de la view {% endcomment %}
+        {% endif %}
+        {% for choice in question.choice_set.all %}
+            <div>
+                <input 
+                    type="radio" 
+                    name="choice" 
+                    id="choice{{ forloop.counter }}"
+                    value="{{ choice.id }}"    
+                >
+                <label for="choice{{ forloop.counter }}"> {% comment %} va a enumerar el numero de elecciones que se vayan desplegando {% endcomment %}
+                    {{ choice.choice_text }} {% comment %} valor del choice que viene del modelo{% endcomment %}
+                </label>
+            </div>
+            <br>
+        {% endfor %}
+    </fieldset>
+    <input type="Submit" name="submit" value="Votar">
+    </form>
