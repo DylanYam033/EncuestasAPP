@@ -1,8 +1,11 @@
+from ast import Try
+from audioop import reverse
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 #importo el modelo de question 
-from .models import Question
+from .models import Question, Choice
 
 #Las views son el backend de nuestra app, las cuales van a estar ligadas a un template(front)
 def index(request): #vista basada en funcion, las views pueden estar basadas en funciones o clases. 
@@ -19,11 +22,21 @@ def detail(request, question_id):
     
 
 def results(request, question_id):
-    """details of every question result"""
-    return HttpResponse(f'Estás viendo los resultados de la pregunta {question_id}')
+    question =get_object_or_404(Question, pk=question_id)
+    return render(request, "polls/results.html", { #render lleva tres parametros: request, ruta del template y un contexto(diccionario)
+        "question": question 
+    })
 
-def vote(request, question_id):
-    """Functions for voting confirmation"""
-    return HttpResponse(f'Estás votando a la pregunta {question_id}')
-    
-    
+def vote(request, question_id): # recibe dos parametros que vienen de detail.html
+    question =get_object_or_404(Question, pk=question_id) #recibe el modelo Question y la pk de la question
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST["choice"]) #viene de name=choice en detail.html
+    except(KeyError, Choice.DoesNotExist):
+        return render(request, "polls/results.html", { #render lleva tres parametros: request, ruta del template y un contexto(diccionario)
+        "question": question, "error_message": "No elegiste una respuesta" 
+    })
+    else:
+        selected_choice.votes += 1
+        selected_choice.save()
+        return HttpResponseRedirect(reverse("polls:results", args=(question.id,))) #cuando vota lo rederigimos a otra template
+
