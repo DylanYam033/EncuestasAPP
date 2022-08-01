@@ -31,7 +31,7 @@ def vote(request, question_id): # recibe dos parametros que vienen de detail.htm
     try:
         selected_choice = question.choice_set.get(pk=request.POST["choice"]) #viene de name=choice en detail.html
     except(KeyError, Choice.DoesNotExist):
-        return render(request, "polls/results.html", { #render lleva tres parametros: request, ruta del template y un contexto(diccionario)
+        return render(request, "polls/detail.html", { #render lleva tres parametros: request, ruta del template y un contexto(diccionario)
         "question": question, "error_message": "No elegiste una respuesta" 
     })
     else:
