@@ -1,11 +1,25 @@
- <form action="{% url 'polls:vote' question.id %}" method="post">  {% comment %} en action se pone la url a donde apunta el formulario, siempre usar metodo post{% endcomment %}
-                                                                   {% comment %} con el app name y el name que esta en urls{% endcomment %}
-{% csrf_token %} {% comment %} siempre usar esta etiqueta por seguridad para proteger los formularios{% endcomment %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    <link rel="stylesheet" href="{% static 'polls/detail.css' %}">
+    <title>{{question.question_text}}</title> {% comment %} trae del modelo question la pregunta{% endcomment %}
+</head>
+<body>
+
+    <form action="{% url 'polls:vote' question.id %}" method="post">  {% comment %} en action se pone la url a donde apunta el formulario, siempre usar metodo post{% endcomment %}
+            {% comment %} con el app name y el name que esta en urls{% endcomment %}
+        {% csrf_token %} {% comment %} siempre usar esta etiqueta por seguridad para proteger los formularios{% endcomment %}
     <fieldset>
-        <legend><h1>{{ question.question_text }}</h1></legend> {% comment %} trae del modelo question la pregunta{% endcomment %}
-        {% if error_message %}
-            <p><strong>{{ error_message }}</strong></p> {% comment %} la variable error_message viene de la view {% endcomment %}
-        {% endif %}
+        <legend><h1>{{ question.question_text }}</h1></legend> 
+            {% if error_message %}
+                <p><strong>{{ error_message }}</strong></p> {% comment %} la variable error_message viene de la view {% endcomment %}
+            {% endif %}
         {% for choice in question.choice_set.all %}
             <div>
                 <input 
@@ -23,5 +37,10 @@
     </fieldset>
     <input type="Submit" name="submit" value="Votar">
     </form>
+    
+</body>
+</html>
+
+
 
     

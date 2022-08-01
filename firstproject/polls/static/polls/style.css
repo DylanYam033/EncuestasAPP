@@ -1,20 +1,22 @@
-body, header, ul, li, footer {
+ /* Alinear todos los elementos dentro de la etiqueda body*/
+ body, header, ul, li, footer {  
     align-items: center;
     display: flex;
     justify-content: center;
 }
+/*  */
 header, ul {
     background: linear-gradient(
         to right,
-        hsl(98, 100%, 62%),
-        hsl(204, 100%,  59%)
+        hsl(252, 70%, 69%),
+        rgb(58, 236, 215)
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
 }
 body {
-   background: hsl(204, 100%, 5%);
+   background: hsl(200, 100%, 2%);
    flex-direction: column;
    font-family: Arial, Helvetica, sans-serif;
    height: 100vh;
@@ -43,7 +45,7 @@ a {
     text-decoration: none;
 }
 footer {
-    justify-content: space-evenly;
+    justify-content: space-evenly; /* Espaciar los elementos del footer horizontalmente */
     padding: 50px 0;
     width: 100vw;
 }
