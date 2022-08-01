@@ -9,12 +9,11 @@ class Question(models.Model):
     question_text = models.CharField(max_length=100) #se indica que el atributo sera un varchar en la base de datos
     pub_date = models.DateField("date published") #se indica que el atributo sera tipo date en la base de datos 
 
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now - datetime.timedelta(days=1)
-
     def __str__(self): #funcion para mostrar las preguntas y no el object
     	return self.question_text
     
+    # def was_published_recently(self):
+    #     return self.pub_date >= timezone.now - datetime.timedelta(days=1)
     
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE) #se indica que este atributo es llave foranea, o sea la llave primaria de question
